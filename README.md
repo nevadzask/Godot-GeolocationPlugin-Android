@@ -6,7 +6,7 @@ A Godot Geolocation Plugin for Android. Compatible with Godot 3.5.1.
 
 ### Android
 
- 1. Put the Geolocation-Plugin Folder (containing the .aar and .gdap file) in the `res://android/plugins` folder in your project
+ 1. Put the contents of the Geolocation-Plugin Folder (the .aar and .gdap files) into the `res://android/plugins` folder in your project
  2. Install Android Build Template (`Project > Install Android Build Template...`)
  3. Add Android Export (`Project > Export...`)
  4. Enable `Use Custom Build` in `Custom Build`-section
