@@ -6,12 +6,13 @@ A Godot Geolocation Plugin for Android. Compatible with Godot 3.5.1.
 
 ### Android
 
- 1. Put the contents of the Geolocation-Plugin Folder (the .aar and .gdap files) into the `res://android/plugins` folder in your project
- 2. Install Android Build Template (`Project > Install Android Build Template...`)
- 3. Add Android Export (`Project > Export...`)
- 4. Enable `Use Custom Build` in `Custom Build`-section
- 5. Enable `Geolocation` in the `Plugins`-section
- 6. Enable `Access Coarse Location` and `Access Fine Location` in the `Permissions`-section
+ 1. Navigate to <https://github.com/WolfBearGames/Godot-GeolocationPlugin-Android/releases/> and download the latest release.
+ 2. Extract the contents of the project zip file into the `res://android/plugins` folder in your project. If this folder does not exist, create it manually.
+ 3. Install Android Build Template (`Project > Install Android Build Template...`)
+ 4. Add Android Export (`Project > Export...`)
+ 5. Enable `Use Custom Build` in `Custom Build`-section
+ 6. Enable `Geolocation` in the `Plugins`-section
+ 7. Enable `Access Coarse Location` and `Access Fine Location` in the `Permissions`-section
 
 ## API
 
