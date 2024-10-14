@@ -7,6 +7,10 @@ plugins {
 val pluginName = "Geolocation"
 val pluginPackageName = "de.wolfbeargames.geolocationplugin"
 
+base {
+    archivesName = pluginName
+}
+
 android {
     namespace = pluginPackageName
     compileSdk = 34
@@ -21,7 +25,6 @@ android {
         manifestPlaceholders["godotPluginName"] = pluginName
         manifestPlaceholders["godotPluginPackageName"] = pluginPackageName
         buildConfigField("String", "GODOT_PLUGIN_NAME", "\"${pluginName}\"")
-        setProperty("archivesBaseName", pluginName)
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
