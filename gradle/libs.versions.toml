@@ -2,8 +2,10 @@
 agp = "8.5.2"
 kotlin = "2.0.20"
 gms = "21.3.0"
+godot = "4.3.0.stable"
 
 [libraries]
+godotengine-godot = {group = "org.godotengine", name = "godot", version.ref = "godot"}
 google-gms = {group = "com.google.android.gms", name = "play-services-location", version.ref = "gms"}
 
 [plugins]

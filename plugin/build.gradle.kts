@@ -36,24 +36,24 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
 dependencies {
-    implementation("org.godotengine:godot:4.3.0.stable")
+    implementation(libs.godotengine.godot)
     implementation(libs.google.gms)
 }
 
 val copyDescriptorsToOutput by tasks.registering(Copy::class) {
-    description = "Copies the Godot plugin descriptos to output directory."
+    description = "Copies the Godot plugin descriptors to output directory."
 
     from("godot_descriptors")
-    into("${project.buildDir}/outputs/aar")
+    into("${layout.buildDirectory.get()}/outputs/aar")
 }
 
 tasks.named("build").configure {
