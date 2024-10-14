@@ -1,5 +1,6 @@
 /*
 Copyright 2022 Andreas Ritter (www.wolfbeargames.de)
+Copyright 2024 Gabriel Olekšák (www.nevadza.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -208,7 +209,7 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
         _hasFinePermission = (statusFine == PackageManager.PERMISSION_GRANTED)
     }
 
-    private fun HasLocationPermissions(): Boolean {
+    private fun hasLocationPermissions(): Boolean {
         if (ContextCompat.checkSelfPermission(
                 activity!!,
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -221,8 +222,8 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
         return true
     }
 
-    private fun HasAppropriateLocationCapability(continueWith: ((request:LocationRequest?) -> Unit)? = null) {
-        val request = CreateLocationRequestWithCurrentSettings()
+    private fun hasAppropriateLocationCapability(continueWith: ((request:LocationRequest?) -> Unit)? = null) {
+        val request = createLocationRequestWithCurrentSettings()
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(request)
         val client = LocationServices.getSettingsClient(activity!!)
@@ -249,21 +250,19 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
         }
     }
 
-    private fun CreateLocationRequestWithCurrentSettings(): LocationRequest {
-        val request = LocationRequest.create()
-        request.priority = _desiredAccuracy
-        request.maxWaitTime = _maxWaitTime * 1000
-        request.interval = _desiredUpdateInterval * 1000
-        request.smallestDisplacement = _distanceFilter
-        return request
+    private fun createLocationRequestWithCurrentSettings(): LocationRequest {
+        return LocationRequest.Builder(_desiredAccuracy, _desiredUpdateInterval * 1000)
+            .setMaxUpdateDelayMillis(_maxWaitTime * 1000)
+            .setMinUpdateDistanceMeters(_distanceFilter)
+            .build()
     }
 
     @SuppressLint("MissingPermission")
-    private fun RequestLocationInternal(request :LocationRequest? = null) {
+    private fun requestLocationInternal(request :LocationRequest? = null) {
         // workaround because getCurrentLocation does not work ("No virtual method getCurrentLocation" Error):
         // request location updates and stop as soon as we got one location
         _locationManager!!.requestLocationUpdates(
-            LocationRequest.create().setPriority(_desiredAccuracy).setMaxWaitTime(0),
+            LocationRequest.Builder(_desiredAccuracy,_desiredUpdateInterval * 1000).setMaxUpdateDelayMillis(0).build(),
             _locationOneTimeCallback!!,
             Looper.getMainLooper()
         ).addOnFailureListener { // don't know if this works and has any effect
@@ -274,13 +273,13 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
     }
 
     @SuppressLint("MissingPermission")
-    private fun StartUpdatingLocationInternal(_request :LocationRequest? = null) {
-        val request:LocationRequest = _request ?: CreateLocationRequestWithCurrentSettings()
+    private fun startUpdatingLocationInternal(request :LocationRequest? = null) {
+        val r:LocationRequest = request ?: createLocationRequestWithCurrentSettings()
 
         _locationUpdatesActive = true
 
         _locationManager!!.requestLocationUpdates(
-            request,
+            r,
             _locationCallback!!,
             Looper.getMainLooper()
         ).addOnFailureListener { // don't know if this works and has any effect
@@ -317,7 +316,7 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
     @UsedByGodot
     fun request_location_capabilty() {
         send_log_signal("m location_capabilty")
-        HasAppropriateLocationCapability()
+        hasAppropriateLocationCapability()
     }
 
     @UsedByGodot
@@ -462,13 +461,13 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
     @UsedByGodot
     fun request_location() {
         send_log_signal("m request_location")
-        if (!HasLocationPermissions()) return
+        if (!hasLocationPermissions()) return
 
         // check GPS capability and continue to get location
         if(_autoCheckLocationCapability){
-            HasAppropriateLocationCapability(this::RequestLocationInternal)
+            hasAppropriateLocationCapability(this::requestLocationInternal)
         } else {
-            RequestLocationInternal()
+            requestLocationInternal()
         }
     }
 
@@ -477,13 +476,13 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
     fun start_updating_location() {
         send_log_signal("m start_updating_location")
         if (_locationUpdatesActive) return
-        if (!HasLocationPermissions()) return
+        if (!hasLocationPermissions()) return
 
         // check GPS capability and continue to get location
         if(_autoCheckLocationCapability){
-            HasAppropriateLocationCapability(this::StartUpdatingLocationInternal)
+            hasAppropriateLocationCapability(this::startUpdatingLocationInternal)
         } else {
-            StartUpdatingLocationInternal()
+            startUpdatingLocationInternal()
         }
     }
 
