@@ -137,7 +137,7 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
         "allows_full_accuracy", "can_request_permissions","is_updating_location",
         "set_distance_filter","set_desired_accuracy","set_return_string_coordinates",
         "request_location","start_updating_location","stop_updating_location",
-        "request_location_capabilty", "set_debug_log_signal","set_failure_timeout",
+        "request_location_capability", "set_debug_log_signal","set_failure_timeout",
         "should_show_permission_requirement_explanation", "set_update_interval", "set_max_wait_time",
         "set_auto_check_location_capability","should_check_location_capability")
 
@@ -231,14 +231,14 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
         task.addOnSuccessListener { response ->
             val states = response.locationSettingsStates
             if (states!!.isLocationPresent) {
-                send_log_signal("m location_capabilty result: TRUE")
+                send_log_signal("m location_capability result: TRUE")
                 send_location_capability_signal(true)
 
                 if (continueWith != null) continueWith(request)
             }
         }
         task.addOnFailureListener { _ ->
-            send_log_signal("m location_capabilty result: FALSE")
+            send_log_signal("m location_capability result: FALSE")
             send_location_capability_signal(false)
 
             // in case we would have continued with getting a location
@@ -314,8 +314,8 @@ class GeolocationPlugin(godot: Godot) : GodotPlugin(godot) {
     }
 
     @UsedByGodot
-    fun request_location_capabilty() {
-        send_log_signal("m location_capabilty")
+    fun request_location_capability() {
+        send_log_signal("m location_capability")
         hasAppropriateLocationCapability()
     }
 
