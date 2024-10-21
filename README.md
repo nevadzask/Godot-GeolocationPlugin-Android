@@ -14,6 +14,15 @@ A Godot Geolocation Plugin for Android. Compatible with Godot 4.3.
  6. Enable `Geolocation` in the `Plugins`-section
  7. Enable `Access Coarse Location` and `Access Fine Location` in the `Permissions`-section
 
+<br/>
+
+## Build plugin
+The plugin is based on the official Android Godot plugin and uses Gradle to compile and build AAR:
+
+`./gradlew clean build`
+
+<br/>
+
 ## API
 
 ### Methods
@@ -89,17 +98,17 @@ The `authorization_changed(int)` signal will be triggered when the user has made
 
 ### Wrappers for easier usage
 
-#### C\#
-
-<https://github.com/nevadzask/Geolocation-Csharp-Wrapper>
+<!-- #### C\# -->
+<!--  -->
+<!-- <https://github.com/nevadzask/Geolocation-Csharp-Wrapper> -->
 
 #### GDScript
 
 <https://github.com/nevadzask/Geolocation-GDScript-Wrapper>
 
-### Example Test App
-
-<https://github.com/nevadzask/GeolocationTestApp>
+<!-- ### Example Test App -->
+<!--  -->
+<!-- <https://github.com/nevadzask/GeolocationTestApp> -->
 
 ### Enums
 
@@ -191,6 +200,8 @@ enum geolocation_error_codes {
 - `["true_heading"] float` - the true heading (relative to **geographic** noth pole)
 - `["heading_accuracy"] float` - the heading accuracy in degrees *(-1 when unavailable)*
 - `["timestamp"] int` - the current time as the number of seconds since 1970-01-01
+
+<br/>
 
 ## License
 

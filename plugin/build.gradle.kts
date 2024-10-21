@@ -52,7 +52,7 @@ dependencies {
     implementation(libs.google.gms)
 }
 
-val copyDescriptorsToOutput by tasks.registering(Copy::class) {
+/*val copyDescriptorsToOutput by tasks.registering(Copy::class) {
     description = "Copies the Godot plugin descriptors to output directory."
 
     from("godot_descriptors")
@@ -61,4 +61,4 @@ val copyDescriptorsToOutput by tasks.registering(Copy::class) {
 
 tasks.named("build").configure {
     finalizedBy(copyDescriptorsToOutput)
-}
+}*/
